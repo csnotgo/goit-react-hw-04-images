@@ -38,6 +38,7 @@ setStatus('pending')
         setError(error);
         setStatus('rejected');
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchRequest, page]);
 
   const onLoadMore = () => {

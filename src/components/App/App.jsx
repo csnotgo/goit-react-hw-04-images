@@ -50,6 +50,7 @@ setStatus('pending')
     setGallery([])
   };
 
+  
   return (
     <div>
       <Searchbar onSubmit={onSubmitSearchRequest}></Searchbar>

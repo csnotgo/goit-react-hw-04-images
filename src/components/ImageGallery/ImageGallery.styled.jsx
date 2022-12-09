@@ -5,7 +5,7 @@ export const Gallery = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  padding-top: 55px;
+  padding: 55px 0;
 `;
 
 export const ErrorMessage = styled.h1`

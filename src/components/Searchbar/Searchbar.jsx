@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Header, Input, Button } from './Searchbar.styled';
 import PropTypes from 'prop-types';
+import Notiflix from 'notiflix';
 
-export const Searchbar = ({onSubmit}) => {
-  const [search, setSearch] = useState('')
+export const Searchbar = ({ onSubmit }) => {
+  const [search, setSearch] = useState('');
 
- const onFormSubmit = e => {
+  const onFormSubmit = e => {
     e.preventDefault();
     if (search.trim() === '') {
-      alert('Please, enter something');
+      Notiflix.Notify.info('Please, enter something');
       return;
     }
     onSubmit(search);
     reset();
-    window.scrollTo(0,1)
+    window.scrollTo(0, 1);
   };
 
   const onInputChange = e => {
@@ -21,27 +22,26 @@ export const Searchbar = ({onSubmit}) => {
   };
 
   const reset = () => {
-   setSearch('')
-  }
+    setSearch('');
+  };
 
-  
-    return (
-      <Header>
-        <form style={{ position: 'relative' }} onSubmit={onFormSubmit}>
-          <Button type="submit">🔎</Button>
+  return (
+    <Header>
+      <form style={{ position: 'relative' }} onSubmit={onFormSubmit}>
+        <Button type="submit">🔎</Button>
 
-          <Input
-            value={search}
-            type="text"
-            autocomplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={onInputChange}
-          />
-        </form>
-      </Header>
-    );
-}
+        <Input
+          value={search}
+          type="text"
+          autocomplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={onInputChange}
+        />
+      </form>
+    </Header>
+  );
+};
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func,

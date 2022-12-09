@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { fetchImages } from 'Services/ImageApi';
+import Notiflix from 'notiflix';
 
 export const App = () => {
   const [searchRequest, setSearchRequest] = useState('');
@@ -14,13 +15,14 @@ export const App = () => {
     if (!searchRequest) {
       return;
     }
-setStatus('pending')
+    setStatus('pending');
     fetchImages(searchRequest, page)
       .then(response => {
         if (response.status === 400) {
           return Promise.reject(
             new Error(
-              `We're sorry, but you've reached the end of search results.` )
+              `We're sorry, but you've reached the end of search results.`
+            )
           );
         }
         return response.json();
@@ -29,6 +31,7 @@ setStatus('pending')
         const hits = data.hits;
         setGallery([...gallery, ...hits]);
         setStatus('resolved');
+        Notiflix.Notify.success(`We found ${data.totalHits} pictures`);
 
         if (hits.length === 0) {
           return Promise.reject(new Error(`no results found ${searchRequest}`));
@@ -38,7 +41,7 @@ setStatus('pending')
         setError(error);
         setStatus('rejected');
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchRequest, page]);
 
   const onLoadMore = () => {
@@ -48,10 +51,9 @@ setStatus('pending')
   const onSubmitSearchRequest = word => {
     setSearchRequest(word);
     setPage(1);
-    setGallery([])
+    setGallery([]);
   };
 
-  
   return (
     <div>
       <Searchbar onSubmit={onSubmitSearchRequest}></Searchbar>
